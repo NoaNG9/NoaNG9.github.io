@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIW</title>
+    <style>
+        /* Styles de base pour la page */
+        *
+
+        /* Styles de base pour la page */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Corps de la page avec disposition en flex */
+        body {
+            display: flex;
+            height: 100vh;
+            /* Prend la hauteur de la fenêtre */
+            flex-direction: row;
+            width: 100%;
+            /* S'assure que le corps occupe toute la largeur */
+        }
+
+        /* Conteneur pour les images latérales */
+        .side-image {
+            width: 24%;
+            /* Largeur des images latérales */
+            height: 100%;
+            /* Hauteur à 100% */
+            background-size: cover;
+            /* Couvre toute la zone */
+            background-position: center;
+            /* Centre l'image */
+        }
+
+        /* Conteneur central pour le contenu principal */
+        .content {
+            flex-grow: 1;
+            /* Prend tout l'espace restant */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Centre les éléments horizontalement */
+            justify-content: center;
+            /* Centrer verticalement pour ne pas avoir besoin de scroller */
+            background-color: #87CEEB;
+            /* Bleu ciel */
+            position: relative;
+            z-index: 1;
+            /* Assure que le contenu est au-dessus des images */
+            height: 100%;
+            /* Prend toute la hauteur de la page */
+            padding: 20px;
+            /* Ajout d'un padding pour centrer les éléments */
+            gap: 20px;
+            /* Espacement léger entre les éléments */
+        }
+
+        /* Titre en or et en grand */
+        .title {
+            letter-spacing: 0.15em;
+            font-size: 3rem;
+            /* Taille du texte augmentée */
+            color: gold;
+            /* Couleur or */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            /* Ombre pour donner du relief */
+            font-weight: bold;
+            /* Met le texte en gras */
+            margin-bottom: -40px;
+            /* Réduit la marge sous le titre */
+        }
+
+        /* Logo centré et agrandi */
+        .logo {
+            width: 30vw;
+            /* Largeur responsive */
+            max-width: 40%;
+            /* Taille maximale */
+            height: auto;
+            margin-bottom: 0;
+            /* Réduit la marge sous le logo */
+            cursor: pointer;
+            /* Change le curseur pour indiquer que c'est cliquable */
+        }
+
+        /* Section des boutons */
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            /* Les boutons sont empilés */
+            gap: 10px;
+            /* Espacement entre les boutons */
+            align-items: center;
+            /* Centre tous les éléments horizontalement */
+        }
+
+        /* Conteneur pour les deux premiers boutons en ligne */
+        .button-row {
+            display: flex;
+            gap: 15px;
+            /* Espacement entre les deux boutons */
+        }
+
+        .button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            background-color: #ff5733;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+            width: 200px;
+            /* Largeur fixe pour les boutons */
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+            background-color: #ff7961;
+        }
+
+        /* Style pour le décompte */
+        .countdown {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin-top: 20px;
+            /* Réduit l'espacement entre le titre et le décompte */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Conteneur pour les images latérales -->
+    <div class="side-image" id="left-side"></div>
+    <div class="content">
+        <!-- Titre de la page -->
+        <div class="title">ChibrIsenWeb</div>
+
+        <!-- Décompte entre le titre et le logo -->
+        <div id="countdown" class="countdown">7</div>
+
+        <!-- Logo centré avec un événement click pour jouer un son -->
+        <img src="logo.png" alt="Logo" class="logo" onclick="playSound()"> <!-- Remplace par le chemin de ton logo -->
+
+        <!-- Son à jouer -->
+        <audio id="clickSound" src="son.mp3"></audio> <!-- Remplace par le nom de ton fichier audio -->
+
+        <!-- Boutons principaux -->
+        <div class="buttons">
+            <!-- Deux boutons alignés côte à côte -->
+            <div class="button-row">
+                <button class="button" onclick="showRandomPopups()">Insta</button>
+                <button class="button" onclick="window.open('https://www.instagram.com/olympisen.bde/', '_blank')">Voir
+                    les vidéos</button>
+            </div>
+
+            <!-- Bouton centré en dessous des deux premiers -->
+            <button class="button" onclick="closePage()">S'inscrire</button>
+        </div>
+    </div>
+    <!-- Conteneur pour l'image de droite -->
+    <div class="side-image" id="right-side"></div>
+
+    <!-- Script JavaScript pour gérer les pop-ups et la fermeture de la page -->
+    <script>
+        // Fonction pour jouer le son
+        function playSound() {
+            const sound = document.getElementById('clickSound');
+            sound.play(); // Joue le son
+        }
+
+        // Fonction pour afficher les pop-ups de vidéo de manière distincte
+        function showRandomPopups() {
+            const videoSources = [
+                "Frappe moi je t’empoisonne.mp4",
+                "Baptiste Mais si je suis très net.mp4",
+                "Bien ou quoi pain d’épice.mp4"
+            ];
+
+            // Crée une fenêtre pop-up pour chaque vidéo
+            videoSources.forEach((src, index) => {
+                const popup = window.open("", `popup${index}`, "width=300,height=200");
+                popup.document.write(`
+                    <html>
+                    <head>
+                        <title>Vidéo</title>
+                        <style>
+                            body {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                height: 100vh;
+                                background-color: black;
+                            }
+                            video {
+                                width: 100%;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <video controls autoplay src="${src}"></video>
+                    </body>
+                    </html>
+                `);
+            });
+        }
+
+        // Fonction pour fermer la page sans message d'alerte
+        function closePage() {
+            window.open('', '_self', ''); // Ouvre une nouvelle page vierge dans le même onglet
+            window.close(); // Ferme l'onglet actuel
+        }
+
+        // Fonction pour changer les images après 7 secondes
+        function changeSideImages() {
+            // Définir les premières images (avec des bières)
+            document.getElementById("left-side").style.backgroundImage = "url('CuvéeTroll.png')";  // Image de bière à gauche
+            document.getElementById("right-side").style.backgroundImage = "url('TripelK.png')";  // Image de bière à droite
+
+            // Décompte de 7 secondes
+            let countdownValue = 7;
+            const countdownElement = document.getElementById("countdown");
+            const countdownInterval = setInterval(function () {
+                countdownElement.textContent = `${countdownValue}`;
+                countdownValue--;
+                if (countdownValue < 0) {
+                    clearInterval(countdownInterval);
+                    // Après 7 secondes, changer les images
+                    document.getElementById("left-side").style.backgroundImage = "url('Design.png')";
+                    document.getElementById("right-side").style.backgroundImage = "url('Design.png')";
+                }
+            }, 1000); // Mise à jour toutes les secondes
+        }
+
+        // Appeler la fonction pour changer les images
+        changeSideImages();
+    </script>
+</body>
+
+</html>
